@@ -6,403 +6,481 @@
   <title>Curious Yao — Cloud Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root[data-theme="dark"] {
       --bg: #0f0f0f;
-      --surface: #161616;
-      --border: #242424;
+      --bg-subtle: #141414;
+      --border: #222222;
       --text-primary: #e8e8e8;
-      --text-secondary: #888888;
+      --text-secondary: #777777;
+      --text-muted: #444444;
       --accent: #4a9eff;
-      --tag-bg: #1a1a1a;
-      --tag-text: #aaaaaa;
-      --toggle-icon: "☀";
+      --done-color: #3d9970;
+      --active-color: #f0a500;
+      --upcoming-color: #444444;
     }
-
     :root[data-theme="light"] {
-      --bg: #f7f7f5;
-      --surface: #ffffff;
-      --border: #e5e5e5;
+      --bg: #f9f9f7;
+      --bg-subtle: #f2f2f0;
+      --border: #e0e0e0;
       --text-primary: #111111;
       --text-secondary: #666666;
+      --text-muted: #bbbbbb;
       --accent: #2563eb;
-      --tag-bg: #efefef;
-      --tag-text: #444444;
-      --toggle-icon: "☽";
+      --done-color: #1a7a52;
+      --active-color: #b07800;
+      --upcoming-color: #cccccc;
     }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
     body {
       background-color: var(--bg);
       color: var(--text-primary);
       font-family: 'Inter', system-ui, sans-serif;
-      line-height: 1.7;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      line-height: 1.75;
+      transition: background-color 0.2s, color 0.2s;
     }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { opacity: 0.75; }
+    .container { max-width: 720px; margin: 0 auto; padding: 72px 24px 96px; }
 
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 64px 24px 96px;
-    }
-
-    /* Header */
-    .header {
+    nav {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 48px;
+      align-items: center;
+      margin-bottom: 80px;
     }
-
-    .name {
+    .nav-name {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
-    }
-
-    .name .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.2em;
-      background: var(--accent);
-      margin-left: 3px;
-      vertical-align: middle;
-      animation: blink 1.2s step-end infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--text-secondary);
-      margin-top: 4px;
-      font-weight: 400;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
     }
-
+    .nav-name span { color: var(--accent); }
     .toggle {
       background: none;
       border: 1px solid var(--border);
       color: var(--text-secondary);
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 5px 12px;
+      border-radius: 4px;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-family: 'Inter', sans-serif;
       transition: border-color 0.2s, color 0.2s;
-      white-space: nowrap;
-      margin-top: 4px;
     }
+    .toggle:hover { border-color: var(--accent); color: var(--accent); }
 
-    .toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* Divider */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 40px 0;
-    }
-
-    .accent-divider {
-      height: 1px;
-      background: var(--accent);
-      width: 32px;
-      margin-bottom: 40px;
-      opacity: 0.6;
-    }
-
-    /* Sections */
-    .section {
-      margin-bottom: 48px;
-    }
-
-    .section-label {
+    .hero { margin-bottom: 72px; }
+    .hero-eyebrow {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
-      font-weight: 500;
       color: var(--accent);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
-
-    /* About */
-    .about-text {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-
-    .about-text strong {
+    .hero-headline {
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.03em;
       color: var(--text-primary);
-      font-weight: 500;
-    }
-
-    /* Skills */
-    .skill-group {
       margin-bottom: 24px;
     }
-
-    .skill-group-name {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 10px;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      font-size: 0.78rem;
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      font-family: 'JetBrains Mono', monospace;
-      transition: border-color 0.15s, color 0.15s;
-    }
-
-    .tag:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* Contact */
-    .contact-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .contact-list li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.88rem;
-    }
-
-    .contact-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 400;
       color: var(--text-secondary);
-      width: 60px;
+    }
+    .hero-body {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+    .hero-body strong { color: var(--text-primary); font-weight: 500; }
+
+    .section { margin-bottom: 64px; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .section-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .philosophy-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.85; }
+    .philosophy-text p + p { margin-top: 16px; }
+    .philosophy-text strong { color: var(--text-primary); font-weight: 500; }
+    blockquote {
+      border-left: 2px solid var(--accent);
+      padding-left: 16px;
+      margin: 24px 0;
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+    }
+
+    .roadmap { display: flex; flex-direction: column; }
+    .roadmap-month { margin-bottom: 32px; }
+    .month-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .roadmap-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .roadmap-item:last-child { border-bottom: none; }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 7px;
       flex-shrink: 0;
     }
+    .status-dot.done     { background: var(--done-color); }
+    .status-dot.active   { background: var(--active-color); }
+    .status-dot.upcoming { background: var(--upcoming-color); }
+    .roadmap-content { flex: 1; }
+    .roadmap-week { font-size: 0.88rem; font-weight: 500; color: var(--text-primary); }
+    .roadmap-week.upcoming { color: var(--text-muted); }
+    .roadmap-desc { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+    .roadmap-desc.upcoming { color: var(--text-muted); }
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      margin-top: 5px;
+    }
+    .status-badge.done     { color: var(--done-color); border: 1px solid var(--done-color); opacity: 0.8; }
+    .status-badge.active   { color: var(--active-color); border: 1px solid var(--active-color); }
+    .status-badge.upcoming { color: var(--text-muted); border: 1px solid var(--upcoming-color); }
 
-    .contact-value {
-      color: var(--text-primary);
+    .built-list { display: flex; flex-direction: column; gap: 20px; }
+    .built-item {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-subtle);
+      transition: border-color 0.2s;
+    }
+    .built-item:hover { border-color: var(--accent); }
+    .built-title { font-size: 0.92rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .built-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; }
+    .built-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .built-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 3px;
     }
 
-    .contact-value a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.15s;
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 12px 0;
+      font-size: 0.88rem;
     }
-
-    .contact-value a:hover {
-      opacity: 0.75;
+    .contact-key {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding-top: 2px;
     }
+    .contact-val { color: var(--text-secondary); }
 
-    /* Footer */
-    .footer {
-      margin-top: 64px;
+    footer {
+      margin-top: 80px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
-      font-size: 0.75rem;
-      color: var(--text-secondary);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
-
-    .footer-stack {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-secondary);
-      opacity: 0.6;
-    }
+    .footer-stack { font-family: 'JetBrains Mono', monospace; }
 
     @media (max-width: 480px) {
-      .container {
-        padding: 40px 20px 64px;
-      }
-
-      .name {
-        font-size: 1.25rem;
-      }
-
-      .footer {
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
-      }
+      .container { padding: 48px 20px 72px; }
+      .hero-headline { font-size: 1.5rem; }
+      footer { flex-direction: column; gap: 8px; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
+<div class="container">
 
-    <!-- Header -->
-    <header class="header">
-      <div>
-        <div class="name">Curious Yao<span class="cursor"></span></div>
-        <div class="title">Cloud Engineer</div>
-      </div>
-      <button class="toggle" onclick="toggleTheme()" id="theme-btn">Light mode</button>
-    </header>
+  <nav>
+    <div class="nav-name">curious<span>.</span>yao</div>
+    <button class="toggle" onclick="toggleTheme()" id="theme-btn">Light mode</button>
+  </nav>
 
-    <div class="accent-divider"></div>
+  <section class="hero">
+    <div class="hero-eyebrow">Cloud Engineer · In Progress</div>
+    <h1 class="hero-headline">
+      Building cloud infrastructure<br />
+      <em>one layer at a time.</em>
+    </h1>
+    <p class="hero-body">
+      I came from mobile development and decided to go deep into cloud engineering —
+      not through courses alone, but by <strong>building real infrastructure with my hands</strong>
+      and understanding the why behind every decision I make.
+      <br /><br />
+      This site documents that journey. Not a finished product — a record of
+      what I've built, what I've broken, and what I've learned from both.
+    </p>
+  </section>
 
-    <!-- About -->
-    <section class="section">
-      <div class="section-label">About</div>
-      <p class="about-text">
-        Cloud engineer with a background in <strong>mobile development</strong>, building
-        production-grade infrastructure on AWS from the ground up. I focus on understanding
-        the <strong>why behind every architectural decision</strong> — not just following
-        tutorials. Currently working through a structured roadmap covering networking,
-        storage, IAM, infrastructure as code, containers, and serverless architecture.
-        <br /><br />
-        I approach cloud engineering the way I approach any problem — <strong>hands-on,
-        deliberately, and with genuine curiosity</strong>. Every resource I deploy, I can
-        explain from first principles.
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title">Philosophy</span>
+    </div>
+    <div class="philosophy-text">
+      <p>
+        Most people learn cloud by following tutorials and getting things to work.
+        I am more interested in <strong>understanding why things work</strong> —
+        and more importantly, why they break.
       </p>
-    </section>
+      <blockquote>
+        "Never just hand over commands without understanding what they do first."
+      </blockquote>
+      <p>
+        Every resource I deploy, I can explain from first principles.
+        Every tool I use, I understand the problem it solves.
+        I believe the engineers who build the most reliable systems
+        are the ones who spent time <strong>deliberately breaking things</strong>
+        in controlled environments before touching anything that matters.
+      </p>
+    </div>
+  </section>
 
-    <div class="divider"></div>
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title">The Roadmap</span>
+      <span class="section-subtitle">3 months · 12 weeks · hands-on</span>
+    </div>
+    <div class="roadmap">
 
-    <!-- Skills -->
-    <section class="section">
-      <div class="section-label">Skills</div>
-
-      <div class="skill-group">
-        <div class="skill-group-name">Cloud & Infrastructure</div>
-        <div class="tags">
-          <span class="tag">AWS EC2</span>
-          <span class="tag">S3</span>
-          <span class="tag">CloudFront</span>
-          <span class="tag">IAM</span>
-          <span class="tag">VPC</span>
-          <span class="tag">Route 53</span>
-          <span class="tag">ACM</span>
-          <span class="tag">RDS</span>
-          <span class="tag">Lambda</span>
+      <div class="roadmap-month">
+        <div class="month-label">Month 1 — Foundations</div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 1 — Networking & Compute</div>
+            <div class="roadmap-desc">EC2, Nginx, Security Groups, VPC from scratch, intentional misconfiguration</div>
+          </div>
+          <div class="status-badge done">done</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 2 — Storage & IAM</div>
+            <div class="roadmap-desc">S3 versioning, bucket policies, IAM roles, EC2 to S3 without hardcoded credentials</div>
+          </div>
+          <div class="status-badge done">done</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 3 — Static Website on AWS</div>
+            <div class="roadmap-desc">S3 + CloudFront + OAC + Route 53 + ACM — this site runs on this stack</div>
+          </div>
+          <div class="status-badge done">done</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 4 — Linux & Scripting</div>
+            <div class="roadmap-desc">Process management, log monitoring, bash scripting, AWS CLI automation</div>
+          </div>
+          <div class="status-badge done">done</div>
         </div>
       </div>
 
-      <div class="skill-group" style="margin-top: 20px;">
-        <div class="skill-group-name">DevOps & Automation</div>
-        <div class="tags">
-          <span class="tag">Terraform</span>
-          <span class="tag">Docker</span>
-          <span class="tag">GitHub Actions</span>
-          <span class="tag">CI/CD</span>
-          <span class="tag">Bash</span>
-          <span class="tag">Linux</span>
+      <div class="roadmap-month">
+        <div class="month-label">Month 2 — Automation</div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 5 — Terraform</div>
+            <div class="roadmap-desc">Infrastructure as code — rebuilt the entire VPC architecture in config files</div>
+          </div>
+          <div class="status-badge done">done</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 6 — CI/CD Pipelines</div>
+            <div class="roadmap-desc">GitHub Actions — push code, site deploys automatically, cache invalidated</div>
+          </div>
+          <div class="status-badge done">done</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot done"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 7 — Docker & Containers</div>
+            <div class="roadmap-desc">Container fundamentals, custom images, Dockerfile best practices, layer caching</div>
+          </div>
+          <div class="status-badge done">done</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot active"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week">Week 8 — First Backend API</div>
+            <div class="roadmap-desc">Python REST API, containerised with Docker, deployed on EC2</div>
+          </div>
+          <div class="status-badge active">in progress</div>
         </div>
       </div>
 
-      <div class="skill-group" style="margin-top: 20px;">
-        <div class="skill-group-name">Networking</div>
-        <div class="tags">
-          <span class="tag">Subnets</span>
-          <span class="tag">Security Groups</span>
-          <span class="tag">Internet Gateways</span>
-          <span class="tag">Route Tables</span>
-          <span class="tag">DNS</span>
-          <span class="tag">HTTPS / TLS</span>
+      <div class="roadmap-month">
+        <div class="month-label">Month 3 — Real Architecture</div>
+        <div class="roadmap-item">
+          <div class="status-dot upcoming"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week upcoming">Week 9 — Databases</div>
+            <div class="roadmap-desc upcoming">RDS PostgreSQL in a private subnet, connected to the API</div>
+          </div>
+          <div class="status-badge upcoming">upcoming</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot upcoming"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week upcoming">Week 10 — Serverless</div>
+            <div class="roadmap-desc upcoming">Lambda, S3 triggers, API Gateway</div>
+          </div>
+          <div class="status-badge upcoming">upcoming</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot upcoming"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week upcoming">Week 11 — Monitoring</div>
+            <div class="roadmap-desc upcoming">CloudWatch dashboards, alarms, structured logging</div>
+          </div>
+          <div class="status-badge upcoming">upcoming</div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status-dot upcoming"></div>
+          <div class="roadmap-content">
+            <div class="roadmap-week upcoming">Week 12 — Capstone Project</div>
+            <div class="roadmap-desc upcoming">Full cloud-native app — frontend, API, database, serverless, IaC, CI/CD</div>
+          </div>
+          <div class="status-badge upcoming">upcoming</div>
         </div>
       </div>
 
-      <div class="skill-group" style="margin-top: 20px;">
-        <div class="skill-group-name">Development</div>
-        <div class="tags">
-          <span class="tag">Python</span>
-          <span class="tag">REST APIs</span>
-          <span class="tag">Mobile Development</span>
-          <span class="tag">Git</span>
-          <span class="tag">HTML / CSS</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title">What I've Built</span>
+      <span class="section-subtitle">real things, not tutorials</span>
+    </div>
+    <div class="built-list">
+      <div class="built-item">
+        <div class="built-title">This Website</div>
+        <div class="built-desc">
+          Hosted on S3, served globally via CloudFront, HTTPS enforced with ACM,
+          custom domain via Route 53. Deployed automatically on every git push
+          via GitHub Actions. Zero manual steps to publish changes.
+        </div>
+        <div class="built-tags">
+          <span class="built-tag">S3</span>
+          <span class="built-tag">CloudFront</span>
+          <span class="built-tag">Route 53</span>
+          <span class="built-tag">ACM</span>
+          <span class="built-tag">GitHub Actions</span>
         </div>
       </div>
-    </section>
+      <div class="built-item">
+        <div class="built-title">Custom VPC Architecture</div>
+        <div class="built-desc">
+          Built a full VPC from scratch — public and private subnets, internet gateway,
+          route tables, security groups. First manually to understand every layer,
+          then rebuilt entirely in Terraform as infrastructure as code.
+        </div>
+        <div class="built-tags">
+          <span class="built-tag">VPC</span>
+          <span class="built-tag">EC2</span>
+          <span class="built-tag">Terraform</span>
+          <span class="built-tag">Networking</span>
+        </div>
+      </div>
+      <div class="built-item">
+        <div class="built-title">Secure S3 Access Pattern</div>
+        <div class="built-desc">
+          EC2 instance reading from S3 using IAM roles and instance profiles —
+          no hardcoded credentials anywhere. Bucket policies, versioning, and the
+          metadata endpoint all understood and configured correctly.
+        </div>
+        <div class="built-tags">
+          <span class="built-tag">IAM</span>
+          <span class="built-tag">S3</span>
+          <span class="built-tag">EC2</span>
+          <span class="built-tag">Security</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <div class="divider"></div>
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title">Contact</span>
+    </div>
+    <div class="contact-grid">
+      <span class="contact-key">email</span>
+      <span class="contact-val"><a href="mailto:curious@iluvi.xyz">curious@iluvi.xyz</a></span>
+      <span class="contact-key">github</span>
+      <span class="contact-val"><a href="https://github.com/geocyt" target="_blank" rel="noopener">github.com/geocyt</a></span>
+      <span class="contact-key">site</span>
+      <span class="contact-val"><a href="https://iluvi.xyz">iluvi.xyz</a></span>
+      <span class="contact-key">based</span>
+      <span class="contact-val" style="color: var(--text-muted);">Available remotely</span>
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section class="section">
-      <div class="section-label">Contact</div>
-      <ul class="contact-list">
-        <li>
-          <span class="contact-label">email</span>
-          <span class="contact-value">
-            <a href="mailto:curious@iluvi.xyz">curious@iluvi.xyz</a>
-          </span>
-        </li>
-        <li>
-          <span class="contact-label">github</span>
-          <span class="contact-value">
-            <a href="https://github.com/geocyt" target="_blank" rel="noopener">github.com/geocyt</a>
-          </span>
-        </li>
-        <li>
-          <span class="contact-label">site</span>
-          <span class="contact-value">
-            <a href="https://iluvi.xyz" target="_blank" rel="noopener">iluvi.xyz</a>
-          </span>
-        </li>
-        <li>
-          <span class="contact-label">location</span>
-          <span class="contact-value" style="color: var(--text-secondary);">Available remotely</span>
-        </li>
-      </ul>
-    </section>
+  <footer>
+    <span>© Curious Yao — updated as I learn</span>
+    <span class="footer-stack">S3 · CloudFront · GitHub Actions</span>
+  </footer>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <span>© Curious Yao</span>
-      <span class="footer-stack">S3 · CloudFront · GitHub Actions</span>
-    </footer>
-
-  </div>
-
-  <script>
-    function toggleTheme() {
-      const html = document.documentElement;
-      const btn = document.getElementById('theme-btn');
-      const current = html.getAttribute('data-theme');
-      if (current === 'dark') {
-        html.setAttribute('data-theme', 'light');
-        btn.textContent = 'Dark mode';
-      } else {
-        html.setAttribute('data-theme', 'dark');
-        btn.textContent = 'Light mode';
-      }
-    }
-  </script>
+</div>
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('theme-btn');
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    btn.textContent = isDark ? 'Dark mode' : 'Light mode';
+  }
+</script>
 </body>
 </html>
