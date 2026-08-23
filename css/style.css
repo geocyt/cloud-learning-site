@@ -520,15 +520,18 @@ blockquote {
 .built-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 24px;
 }
 
 .built-item {
-  padding: 24px 0;
-  border-bottom: 0.5px solid var(--border);
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-subtle);
+  transition: border-color 0.2s;
 }
 
-.built-item:last-child { border-bottom: none; }
+.built-item:hover { border-color: var(--accent); }
 
 .built-title {
   font-size: 0.9rem;
