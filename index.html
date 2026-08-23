@@ -34,94 +34,21 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-inner">
-      <div class="hero-left">
-        <div class="eyebrow">// cloud engineering · in progress</div>
-        <h1 class="hero-headline">
-          Building infra<br />
-          that is <em>boring</em><br />
-          — the best kind.
-        </h1>
-        <p class="hero-sub">
-          Clean VPCs, secure IAM, pipelines that ship —
-          understanding the why behind every decision.
-        </p>
-        <div class="hero-btns">
-          <a href="#roadmap" class="btn-primary">see the roadmap →</a>
-          <a href="#built" class="btn-secondary">what I've built</a>
-        </div>
-      </div>
-
-      <div class="hero-right">
-        <div class="pipeline-card">
-          <div class="pipeline-titlebar">
-            <div class="window-dots">
-              <span class="wdot wdot-r"></span>
-              <span class="wdot wdot-y"></span>
-              <span class="wdot wdot-g"></span>
-            </div>
-            <span class="pipeline-name">cloud-learning · pipeline #0012</span>
-            <span class="pipeline-status">
-              <span class="pulse-dot"></span>running
-            </span>
-          </div>
-          <div class="pipeline-stages">
-            <div class="stage">
-              <div class="stage-header">
-                <span class="stage-name">.build</span>
-                <span class="stage-tick done">✓</span>
-              </div>
-              <div class="stage-item"><span class="sdot done"></span>checkout</div>
-              <div class="stage-item"><span class="sdot done"></span>configure-aws</div>
-              <div class="stage-item"><span class="sdot done"></span>lint</div>
-            </div>
-            <div class="stage">
-              <div class="stage-header">
-                <span class="stage-name">.deploy</span>
-                <span class="stage-tick done">✓</span>
-              </div>
-              <div class="stage-item"><span class="sdot done"></span>s3-sync</div>
-              <div class="stage-item"><span class="sdot done"></span>invalidate-cf</div>
-              <div class="stage-item"><span class="sdot done"></span>verify</div>
-            </div>
-            <div class="stage">
-              <div class="stage-header">
-                <span class="stage-name">.next</span>
-                <span class="stage-tick pending">–</span>
-              </div>
-              <div class="stage-item"><span class="sdot active"></span>docker-build</div>
-              <div class="stage-item"><span class="sdot pending"></span>push-ecr</div>
-              <div class="stage-item"><span class="sdot pending"></span>deploy-ec2</div>
-            </div>
-          </div>
-          <div class="pipeline-footer">
-            <span>$ weeks 7/12</span>
-            <span>$ status <em>active</em></span>
-            <span>$ last deploy <em>just now</em></span>
-          </div>
-        </div>
-      </div>
+      <div class="eyebrow">Cloud Engineer · In Progress</div>
+      <h1 class="hero-headline">
+        Building cloud infrastructure<br />
+        <em>one layer at a time.</em>
+      </h1>
+      <p class="hero-body">
+        I came from mobile development and decided to go deep into cloud engineering —
+        not through courses alone, but by <strong>building real infrastructure with my hands</strong>
+        and understanding the why behind every decision I make.
+        <br /><br />
+        This site documents that journey. Not a finished product — a record of
+        what I've built, what I've broken, and what I've learned from both.
+      </p>
     </div>
   </section>
-
-  <!-- Stats -->
-  <div class="stats-row">
-    <div class="stat">
-      <div class="stat-num">7</div>
-      <div class="stat-label">weeks complete</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">AWS</div>
-      <div class="stat-label">primary stack</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">12+</div>
-      <div class="stat-label">resources built</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">remote</div>
-      <div class="stat-label">available now</div>
-    </div>
-  </div>
 
   <!-- Philosophy -->
   <section class="section" id="philosophy">
@@ -272,9 +199,9 @@
     <div class="section-inner">
       <div class="section-label">// what I've built</div>
       <div class="section-meta">real things, not tutorials</div>
-      <div class="built-grid">
+      <div class="built-list">
 
-        <div class="built-card">
+        <div class="built-item">
           <div class="built-title">This Website</div>
           <div class="built-desc">
             Hosted on S3, served globally via CloudFront, HTTPS enforced with ACM,
@@ -290,12 +217,12 @@
           </div>
         </div>
 
-        <div class="built-card">
+        <div class="built-item">
           <div class="built-title">Custom VPC Architecture</div>
           <div class="built-desc">
             Built a full VPC from scratch — public and private subnets, internet gateway,
-            route tables, security groups. First manually, then rebuilt entirely in
-            Terraform as infrastructure as code.
+            route tables, security groups. First manually to understand every layer,
+            then rebuilt entirely in Terraform as infrastructure as code.
           </div>
           <div class="built-tags">
             <span class="tag">VPC</span>
@@ -305,12 +232,12 @@
           </div>
         </div>
 
-        <div class="built-card">
+        <div class="built-item">
           <div class="built-title">Secure S3 Access Pattern</div>
           <div class="built-desc">
             EC2 instance reading from S3 using IAM roles and instance profiles —
-            no hardcoded credentials anywhere. Bucket policies, versioning, and
-            the metadata endpoint all understood and configured correctly.
+            no hardcoded credentials anywhere. Bucket policies, versioning, and the
+            metadata endpoint all understood and configured correctly.
           </div>
           <div class="built-tags">
             <span class="tag">IAM</span>
