@@ -4,483 +4,351 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Curious Yao — Cloud Engineer</title>
+  <meta name="description" content="Cloud engineer building production-grade AWS infrastructure from the ground up." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root[data-theme="dark"] {
-      --bg: #0f0f0f;
-      --bg-subtle: #141414;
-      --border: #222222;
-      --text-primary: #e8e8e8;
-      --text-secondary: #777777;
-      --text-muted: #444444;
-      --accent: #4a9eff;
-      --done-color: #3d9970;
-      --active-color: #f0a500;
-      --upcoming-color: #444444;
-    }
-    :root[data-theme="light"] {
-      --bg: #f9f9f7;
-      --bg-subtle: #f2f2f0;
-      --border: #e0e0e0;
-      --text-primary: #111111;
-      --text-secondary: #666666;
-      --text-muted: #bbbbbb;
-      --accent: #2563eb;
-      --done-color: #1a7a52;
-      --active-color: #b07800;
-      --upcoming-color: #cccccc;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-    body {
-      background-color: var(--bg);
-      color: var(--text-primary);
-      font-family: 'Inter', system-ui, sans-serif;
-      line-height: 1.75;
-      transition: background-color 0.2s, color 0.2s;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { opacity: 0.75; }
-    .container { max-width: 720px; margin: 0 auto; padding: 72px 24px 96px; }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 80px;
-    }
-    .nav-name {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-    }
-    .nav-name span { color: var(--accent); }
-    .toggle {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-secondary);
-      padding: 5px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.75rem;
-      font-family: 'Inter', sans-serif;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .toggle:hover { border-color: var(--accent); color: var(--accent); }
-
-    .hero { margin-bottom: 72px; }
-    .hero-eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-    .hero-headline {
-      font-size: 2rem;
-      font-weight: 600;
-      line-height: 1.25;
-      letter-spacing: -0.03em;
-      color: var(--text-primary);
-      margin-bottom: 24px;
-    }
-    .hero-headline em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--text-secondary);
-    }
-    .hero-body {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      max-width: 560px;
-    }
-    .hero-body strong { color: var(--text-primary); font-weight: 500; }
-
-    .section { margin-bottom: 64px; }
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section-title {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .section-subtitle {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      font-style: italic;
-    }
-
-    .philosophy-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.85; }
-    .philosophy-text p + p { margin-top: 16px; }
-    .philosophy-text strong { color: var(--text-primary); font-weight: 500; }
-    blockquote {
-      border-left: 2px solid var(--accent);
-      padding-left: 16px;
-      margin: 24px 0;
-      font-style: italic;
-      color: var(--text-secondary);
-      font-size: 0.92rem;
-    }
-
-    .roadmap { display: flex; flex-direction: column; }
-    .roadmap-month { margin-bottom: 32px; }
-    .month-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .roadmap-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .roadmap-item:last-child { border-bottom: none; }
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-top: 7px;
-      flex-shrink: 0;
-    }
-    .status-dot.done     { background: var(--done-color); }
-    .status-dot.active   { background: var(--active-color); }
-    .status-dot.upcoming { background: var(--upcoming-color); }
-    .roadmap-content { flex: 1; }
-    .roadmap-week { font-size: 0.88rem; font-weight: 500; color: var(--text-primary); }
-    .roadmap-week.upcoming { color: var(--text-muted); }
-    .roadmap-desc { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
-    .roadmap-desc.upcoming { color: var(--text-muted); }
-    .status-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      padding: 2px 8px;
-      border-radius: 3px;
-      white-space: nowrap;
-      margin-top: 5px;
-    }
-    .status-badge.done     { color: var(--done-color); border: 1px solid var(--done-color); opacity: 0.8; }
-    .status-badge.active   { color: var(--active-color); border: 1px solid var(--active-color); }
-    .status-badge.upcoming { color: var(--text-muted); border: 1px solid var(--upcoming-color); }
-
-    .built-list { display: flex; flex-direction: column; gap: 20px; }
-    .built-item {
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--bg-subtle);
-      transition: border-color 0.2s;
-    }
-    .built-item:hover { border-color: var(--accent); }
-    .built-title { font-size: 0.92rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
-    .built-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; }
-    .built-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .built-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-      border-radius: 3px;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 12px 0;
-      font-size: 0.88rem;
-    }
-    .contact-key {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      padding-top: 2px;
-    }
-    .contact-val { color: var(--text-secondary); }
-
-    footer {
-      margin-top: 80px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-    .footer-stack { font-family: 'JetBrains Mono', monospace; }
-
-    @media (max-width: 480px) {
-      .container { padding: 48px 20px 72px; }
-      .hero-headline { font-size: 1.5rem; }
-      footer { flex-direction: column; gap: 8px; align-items: flex-start; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-<div class="container">
 
-  <nav>
-    <div class="nav-name">curious<span>.</span>yao</div>
-    <button class="toggle" onclick="toggleTheme()" id="theme-btn">Light mode</button>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo">curious<span>.</span>yao</a>
+      <div class="nav-links">
+        <div class="avail-badge">
+          <span class="avail-dot"></span>
+          available · 2026
+        </div>
+        <a href="#roadmap" class="nav-link">roadmap</a>
+        <a href="#built" class="nav-link">built</a>
+        <a href="#contact" class="nav-link">contact</a>
+        <button class="theme-btn" id="theme-btn" aria-label="Toggle theme">
+          <span class="theme-icon" id="theme-icon">☀</span>
+        </button>
+      </div>
+    </div>
   </nav>
 
+  <!-- Hero -->
   <section class="hero">
-    <div class="hero-eyebrow">Cloud Engineer · In Progress</div>
-    <h1 class="hero-headline">
-      Building cloud infrastructure<br />
-      <em>one layer at a time.</em>
-    </h1>
-    <p class="hero-body">
-      I came from mobile development and decided to go deep into cloud engineering —
-      not through courses alone, but by <strong>building real infrastructure with my hands</strong>
-      and understanding the why behind every decision I make.
-      <br /><br />
-      This site documents that journey. Not a finished product — a record of
-      what I've built, what I've broken, and what I've learned from both.
-    </p>
-  </section>
-
-  <section class="section">
-    <div class="section-header">
-      <span class="section-title">Philosophy</span>
-    </div>
-    <div class="philosophy-text">
-      <p>
-        Most people learn cloud by following tutorials and getting things to work.
-        I am more interested in <strong>understanding why things work</strong> —
-        and more importantly, why they break.
-      </p>
-      <blockquote>
-        "Never just hand over commands without understanding what they do first."
-      </blockquote>
-      <p>
-        Every resource I deploy, I can explain from first principles.
-        Every tool I use, I understand the problem it solves.
-        I believe the engineers who build the most reliable systems
-        are the ones who spent time <strong>deliberately breaking things</strong>
-        in controlled environments before touching anything that matters.
-      </p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-header">
-      <span class="section-title">The Roadmap</span>
-      <span class="section-subtitle">3 months · 12 weeks · hands-on</span>
-    </div>
-    <div class="roadmap">
-
-      <div class="roadmap-month">
-        <div class="month-label">Month 1 — Foundations</div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 1 — Networking & Compute</div>
-            <div class="roadmap-desc">EC2, Nginx, Security Groups, VPC from scratch, intentional misconfiguration</div>
-          </div>
-          <div class="status-badge done">done</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 2 — Storage & IAM</div>
-            <div class="roadmap-desc">S3 versioning, bucket policies, IAM roles, EC2 to S3 without hardcoded credentials</div>
-          </div>
-          <div class="status-badge done">done</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 3 — Static Website on AWS</div>
-            <div class="roadmap-desc">S3 + CloudFront + OAC + Route 53 + ACM — this site runs on this stack</div>
-          </div>
-          <div class="status-badge done">done</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 4 — Linux & Scripting</div>
-            <div class="roadmap-desc">Process management, log monitoring, bash scripting, AWS CLI automation</div>
-          </div>
-          <div class="status-badge done">done</div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="eyebrow">// cloud engineering · in progress</div>
+        <h1 class="hero-headline">
+          Building infra<br />
+          that is <em>boring</em><br />
+          — the best kind.
+        </h1>
+        <p class="hero-sub">
+          Clean VPCs, secure IAM, pipelines that ship —
+          understanding the why behind every decision.
+        </p>
+        <div class="hero-btns">
+          <a href="#roadmap" class="btn-primary">see the roadmap →</a>
+          <a href="#built" class="btn-secondary">what I've built</a>
         </div>
       </div>
 
-      <div class="roadmap-month">
-        <div class="month-label">Month 2 — Automation</div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 5 — Terraform</div>
-            <div class="roadmap-desc">Infrastructure as code — rebuilt the entire VPC architecture in config files</div>
+      <div class="hero-right">
+        <div class="pipeline-card">
+          <div class="pipeline-titlebar">
+            <div class="window-dots">
+              <span class="wdot wdot-r"></span>
+              <span class="wdot wdot-y"></span>
+              <span class="wdot wdot-g"></span>
+            </div>
+            <span class="pipeline-name">cloud-learning · pipeline #0012</span>
+            <span class="pipeline-status">
+              <span class="pulse-dot"></span>running
+            </span>
           </div>
-          <div class="status-badge done">done</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 6 — CI/CD Pipelines</div>
-            <div class="roadmap-desc">GitHub Actions — push code, site deploys automatically, cache invalidated</div>
+          <div class="pipeline-stages">
+            <div class="stage">
+              <div class="stage-header">
+                <span class="stage-name">.build</span>
+                <span class="stage-tick done">✓</span>
+              </div>
+              <div class="stage-item"><span class="sdot done"></span>checkout</div>
+              <div class="stage-item"><span class="sdot done"></span>configure-aws</div>
+              <div class="stage-item"><span class="sdot done"></span>lint</div>
+            </div>
+            <div class="stage">
+              <div class="stage-header">
+                <span class="stage-name">.deploy</span>
+                <span class="stage-tick done">✓</span>
+              </div>
+              <div class="stage-item"><span class="sdot done"></span>s3-sync</div>
+              <div class="stage-item"><span class="sdot done"></span>invalidate-cf</div>
+              <div class="stage-item"><span class="sdot done"></span>verify</div>
+            </div>
+            <div class="stage">
+              <div class="stage-header">
+                <span class="stage-name">.next</span>
+                <span class="stage-tick pending">–</span>
+              </div>
+              <div class="stage-item"><span class="sdot active"></span>docker-build</div>
+              <div class="stage-item"><span class="sdot pending"></span>push-ecr</div>
+              <div class="stage-item"><span class="sdot pending"></span>deploy-ec2</div>
+            </div>
           </div>
-          <div class="status-badge done">done</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot done"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 7 — Docker & Containers</div>
-            <div class="roadmap-desc">Container fundamentals, custom images, Dockerfile best practices, layer caching</div>
+          <div class="pipeline-footer">
+            <span>$ weeks 7/12</span>
+            <span>$ status <em>active</em></span>
+            <span>$ last deploy <em>just now</em></span>
           </div>
-          <div class="status-badge done">done</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot active"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week">Week 8 — First Backend API</div>
-            <div class="roadmap-desc">Python REST API, containerised with Docker, deployed on EC2</div>
-          </div>
-          <div class="status-badge active">in progress</div>
-        </div>
-      </div>
-
-      <div class="roadmap-month">
-        <div class="month-label">Month 3 — Real Architecture</div>
-        <div class="roadmap-item">
-          <div class="status-dot upcoming"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week upcoming">Week 9 — Databases</div>
-            <div class="roadmap-desc upcoming">RDS PostgreSQL in a private subnet, connected to the API</div>
-          </div>
-          <div class="status-badge upcoming">upcoming</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot upcoming"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week upcoming">Week 10 — Serverless</div>
-            <div class="roadmap-desc upcoming">Lambda, S3 triggers, API Gateway</div>
-          </div>
-          <div class="status-badge upcoming">upcoming</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot upcoming"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week upcoming">Week 11 — Monitoring</div>
-            <div class="roadmap-desc upcoming">CloudWatch dashboards, alarms, structured logging</div>
-          </div>
-          <div class="status-badge upcoming">upcoming</div>
-        </div>
-        <div class="roadmap-item">
-          <div class="status-dot upcoming"></div>
-          <div class="roadmap-content">
-            <div class="roadmap-week upcoming">Week 12 — Capstone Project</div>
-            <div class="roadmap-desc upcoming">Full cloud-native app — frontend, API, database, serverless, IaC, CI/CD</div>
-          </div>
-          <div class="status-badge upcoming">upcoming</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-header">
-      <span class="section-title">What I've Built</span>
-      <span class="section-subtitle">real things, not tutorials</span>
-    </div>
-    <div class="built-list">
-      <div class="built-item">
-        <div class="built-title">This Website</div>
-        <div class="built-desc">
-          Hosted on S3, served globally via CloudFront, HTTPS enforced with ACM,
-          custom domain via Route 53. Deployed automatically on every git push
-          via GitHub Actions. Zero manual steps to publish changes.
-        </div>
-        <div class="built-tags">
-          <span class="built-tag">S3</span>
-          <span class="built-tag">CloudFront</span>
-          <span class="built-tag">Route 53</span>
-          <span class="built-tag">ACM</span>
-          <span class="built-tag">GitHub Actions</span>
-        </div>
-      </div>
-      <div class="built-item">
-        <div class="built-title">Custom VPC Architecture</div>
-        <div class="built-desc">
-          Built a full VPC from scratch — public and private subnets, internet gateway,
-          route tables, security groups. First manually to understand every layer,
-          then rebuilt entirely in Terraform as infrastructure as code.
-        </div>
-        <div class="built-tags">
-          <span class="built-tag">VPC</span>
-          <span class="built-tag">EC2</span>
-          <span class="built-tag">Terraform</span>
-          <span class="built-tag">Networking</span>
-        </div>
-      </div>
-      <div class="built-item">
-        <div class="built-title">Secure S3 Access Pattern</div>
-        <div class="built-desc">
-          EC2 instance reading from S3 using IAM roles and instance profiles —
-          no hardcoded credentials anywhere. Bucket policies, versioning, and the
-          metadata endpoint all understood and configured correctly.
-        </div>
-        <div class="built-tags">
-          <span class="built-tag">IAM</span>
-          <span class="built-tag">S3</span>
-          <span class="built-tag">EC2</span>
-          <span class="built-tag">Security</span>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-header">
-      <span class="section-title">Contact</span>
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num">7</div>
+      <div class="stat-label">weeks complete</div>
     </div>
-    <div class="contact-grid">
-      <span class="contact-key">email</span>
-      <span class="contact-val"><a href="mailto:curious@iluvi.xyz">curious@iluvi.xyz</a></span>
-      <span class="contact-key">github</span>
-      <span class="contact-val"><a href="https://github.com/geocyt" target="_blank" rel="noopener">github.com/geocyt</a></span>
-      <span class="contact-key">site</span>
-      <span class="contact-val"><a href="https://iluvi.xyz">iluvi.xyz</a></span>
-      <span class="contact-key">based</span>
-      <span class="contact-val" style="color: var(--text-muted);">Available remotely</span>
+    <div class="stat">
+      <div class="stat-num">AWS</div>
+      <div class="stat-label">primary stack</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">resources built</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">remote</div>
+      <div class="stat-label">available now</div>
+    </div>
+  </div>
+
+  <!-- Philosophy -->
+  <section class="section" id="philosophy">
+    <div class="section-inner">
+      <div class="section-label">// philosophy</div>
+      <div class="philosophy">
+        <p>
+          Most people learn cloud by following tutorials and getting things to work.
+          I am more interested in <strong>understanding why things work</strong> —
+          and more importantly, why they break.
+        </p>
+        <blockquote>
+          "Never just hand over commands without understanding what they do first."
+        </blockquote>
+        <p>
+          Every resource I deploy, I can explain from first principles.
+          Every tool I use, I understand the problem it solves.
+          I believe the engineers who build the most reliable systems are the ones
+          who spent time <strong>deliberately breaking things</strong> in controlled
+          environments before touching anything that matters.
+        </p>
+      </div>
     </div>
   </section>
 
-  <footer>
-    <span>© Curious Yao — updated as I learn</span>
-    <span class="footer-stack">S3 · CloudFront · GitHub Actions</span>
+  <!-- Roadmap -->
+  <section class="section" id="roadmap">
+    <div class="section-inner">
+      <div class="section-label">// the roadmap</div>
+      <div class="section-meta">3 months · 12 weeks · hands-on</div>
+
+      <div class="roadmap">
+
+        <div class="roadmap-month">
+          <div class="month-label">month 1 — foundations</div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 1 — Networking & Compute</span>
+              <span class="ritem-desc">EC2, Nginx, Security Groups, VPC from scratch, intentional misconfiguration</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 2 — Storage & IAM</span>
+              <span class="ritem-desc">S3 versioning, bucket policies, IAM roles, EC2 to S3 without hardcoded credentials</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 3 — Static Website on AWS</span>
+              <span class="ritem-desc">S3 + CloudFront + OAC + Route 53 + ACM — this site runs on this stack</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 4 — Linux & Scripting</span>
+              <span class="ritem-desc">Process management, log monitoring, bash scripting, AWS CLI automation</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+        </div>
+
+        <div class="roadmap-month">
+          <div class="month-label">month 2 — automation</div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 5 — Terraform</span>
+              <span class="ritem-desc">Infrastructure as code — rebuilt the entire VPC architecture in config files</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 6 — CI/CD Pipelines</span>
+              <span class="ritem-desc">GitHub Actions — push code, site deploys automatically, cache invalidated</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot done"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 7 — Docker & Containers</span>
+              <span class="ritem-desc">Container fundamentals, custom images, Dockerfile best practices, layer caching</span>
+            </div>
+            <span class="rbadge done">done</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot active"></span>
+            <div class="ritem-content">
+              <span class="ritem-title">Week 8 — First Backend API</span>
+              <span class="ritem-desc">Python REST API, containerised with Docker, deployed on EC2</span>
+            </div>
+            <span class="rbadge active">in progress</span>
+          </div>
+        </div>
+
+        <div class="roadmap-month">
+          <div class="month-label">month 3 — real architecture</div>
+          <div class="roadmap-item">
+            <span class="rdot upcoming"></span>
+            <div class="ritem-content">
+              <span class="ritem-title upcoming">Week 9 — Databases</span>
+              <span class="ritem-desc upcoming">RDS PostgreSQL in a private subnet, connected to the API</span>
+            </div>
+            <span class="rbadge upcoming">upcoming</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot upcoming"></span>
+            <div class="ritem-content">
+              <span class="ritem-title upcoming">Week 10 — Serverless</span>
+              <span class="ritem-desc upcoming">Lambda, S3 triggers, API Gateway</span>
+            </div>
+            <span class="rbadge upcoming">upcoming</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot upcoming"></span>
+            <div class="ritem-content">
+              <span class="ritem-title upcoming">Week 11 — Monitoring</span>
+              <span class="ritem-desc upcoming">CloudWatch dashboards, alarms, structured logging</span>
+            </div>
+            <span class="rbadge upcoming">upcoming</span>
+          </div>
+          <div class="roadmap-item">
+            <span class="rdot upcoming"></span>
+            <div class="ritem-content">
+              <span class="ritem-title upcoming">Week 12 — Capstone Project</span>
+              <span class="ritem-desc upcoming">Full cloud-native app — frontend, API, database, serverless, IaC, CI/CD</span>
+            </div>
+            <span class="rbadge upcoming">upcoming</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- What I've Built -->
+  <section class="section" id="built">
+    <div class="section-inner">
+      <div class="section-label">// what I've built</div>
+      <div class="section-meta">real things, not tutorials</div>
+      <div class="built-grid">
+
+        <div class="built-card">
+          <div class="built-title">This Website</div>
+          <div class="built-desc">
+            Hosted on S3, served globally via CloudFront, HTTPS enforced with ACM,
+            custom domain via Route 53. Deployed automatically on every git push
+            via GitHub Actions. Zero manual steps to publish changes.
+          </div>
+          <div class="built-tags">
+            <span class="tag">S3</span>
+            <span class="tag">CloudFront</span>
+            <span class="tag">Route 53</span>
+            <span class="tag">ACM</span>
+            <span class="tag">GitHub Actions</span>
+          </div>
+        </div>
+
+        <div class="built-card">
+          <div class="built-title">Custom VPC Architecture</div>
+          <div class="built-desc">
+            Built a full VPC from scratch — public and private subnets, internet gateway,
+            route tables, security groups. First manually, then rebuilt entirely in
+            Terraform as infrastructure as code.
+          </div>
+          <div class="built-tags">
+            <span class="tag">VPC</span>
+            <span class="tag">EC2</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">Networking</span>
+          </div>
+        </div>
+
+        <div class="built-card">
+          <div class="built-title">Secure S3 Access Pattern</div>
+          <div class="built-desc">
+            EC2 instance reading from S3 using IAM roles and instance profiles —
+            no hardcoded credentials anywhere. Bucket policies, versioning, and
+            the metadata endpoint all understood and configured correctly.
+          </div>
+          <div class="built-tags">
+            <span class="tag">IAM</span>
+            <span class="tag">S3</span>
+            <span class="tag">EC2</span>
+            <span class="tag">Security</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="section-inner">
+      <div class="section-label">// contact</div>
+      <div class="contact-grid">
+        <span class="ckey">email</span>
+        <span class="cval"><a href="mailto:curious@iluvi.xyz">curious@iluvi.xyz</a></span>
+        <span class="ckey">github</span>
+        <span class="cval"><a href="https://github.com/geocyt" target="_blank" rel="noopener">github.com/geocyt</a></span>
+        <span class="ckey">site</span>
+        <span class="cval"><a href="https://iluvi.xyz">iluvi.xyz</a></span>
+        <span class="ckey">based</span>
+        <span class="cval muted">available remotely</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© Curious Yao — updated as I learn</span>
+      <span class="footer-stack">S3 · CloudFront · GitHub Actions</span>
+    </div>
   </footer>
 
-</div>
-<script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    const btn = document.getElementById('theme-btn');
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    btn.textContent = isDark ? 'Dark mode' : 'Light mode';
-  }
-</script>
+  <script src="js/main.js"></script>
 </body>
 </html>
