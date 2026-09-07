@@ -145,32 +145,32 @@
             <span class="rbadge done">done</span>
           </div>
           <div class="roadmap-item">
-            <span class="rdot active"></span>
+            <span class="rdot done"></span>
             <div class="ritem-content">
               <span class="ritem-title">Week 8 — First Backend API</span>
               <span class="ritem-desc">Python REST API, containerised with Docker, deployed on EC2</span>
             </div>
-            <span class="rbadge active">in progress</span>
+            <span class="rbadge done">done</span>
           </div>
         </div>
 
         <div class="roadmap-month">
           <div class="month-label">month 3 — real architecture</div>
           <div class="roadmap-item">
-            <span class="rdot upcoming"></span>
+            <span class="rdot done"></span>
             <div class="ritem-content">
-              <span class="ritem-title upcoming">Week 9 — Databases</span>
-              <span class="ritem-desc upcoming">RDS PostgreSQL in a private subnet, connected to the API</span>
+              <span class="ritem-title">Week 9 — Databases</span>
+              <span class="ritem-desc">RDS PostgreSQL in a private subnet, connected to the API, data persists across restarts</span>
             </div>
-            <span class="rbadge upcoming">upcoming</span>
+            <span class="rbadge done">done</span>
           </div>
           <div class="roadmap-item">
-            <span class="rdot upcoming"></span>
+            <span class="rdot active"></span>
             <div class="ritem-content">
-              <span class="ritem-title upcoming">Week 10 — Serverless</span>
-              <span class="ritem-desc upcoming">Lambda, S3 triggers, API Gateway</span>
+              <span class="ritem-title">Week 10 — Serverless</span>
+              <span class="ritem-desc">Lambda, S3 triggers, API Gateway</span>
             </div>
-            <span class="rbadge upcoming">upcoming</span>
+            <span class="rbadge active">in progress</span>
           </div>
           <div class="roadmap-item">
             <span class="rdot upcoming"></span>
@@ -244,6 +244,25 @@
             <span class="tag">S3</span>
             <span class="tag">EC2</span>
             <span class="tag">Security</span>
+          </div>
+        </div>
+
+        <div class="built-item">
+          <div class="built-title">Notes REST API with Database</div>
+          <div class="built-desc">
+            Python REST API built with FastAPI, containerised with Docker, deployed on EC2.
+            Connected to RDS PostgreSQL in a private subnet — data persists across container
+            restarts. Entire infrastructure provisioned automatically via Terraform with
+            zero manual server configuration after terraform apply.
+          </div>
+          <div class="built-tags">
+            <span class="tag">Python</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Docker</span>
+            <span class="tag">EC2</span>
+            <span class="tag">RDS</span>
+            <span class="tag">SQLAlchemy</span>
+            <span class="tag">Terraform</span>
           </div>
         </div>
 
