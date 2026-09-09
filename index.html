@@ -266,23 +266,45 @@
           </div>
         </div>
 
-	
         <div class="built-item">
           <div class="built-title">URLSync</div>
-          <a href="/projects/urlsync/">URLSync</a>
-	  <div class="built-desc">
-            A self-hosted alternative to Brave Sync — one small VPS, Postgres, and Tailscale, built to practice the parts of cloud infrastructure that don't show up in a tutorial: adopting a server that already exists, and debugging tools that quietly stop working.
+          <div class="built-desc">
+            A self-hosted alternative to Brave Sync — one small VPS, Postgres, and Tailscale,
+            built to practice the parts of cloud infrastructure that don't show up in a tutorial:
+            adopting a server that already exists, and debugging tools that quietly stop working.
           </div>
           <div class="built-tags">
             <span class="tag">Python</span>
             <span class="tag">FastAPI</span>
             <span class="tag">Docker</span>
-            <span class="tag">Linode VPS Compute</span>
+            <span class="tag">Linode VPS</span>
             <span class="tag">PostgreSQL</span>
             <span class="tag">Terraform</span>
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- Cloud Log -->
+  <section class="section" id="log">
+    <div class="section-inner">
+      <div class="section-label">// cloud log</div>
+      <div class="section-meta">sessions tracked · consistency over intensity</div>
+      <div class="cloud-log">
+        <div class="clw-grid-wrap">
+          <div class="clw-grid" id="clw-grid"></div>
+        </div>
+        <div class="clw-legend">
+          <span>less</span>
+          <span class="clw-cell"></span>
+          <span class="clw-cell level-1"></span>
+          <span class="clw-cell level-2"></span>
+          <span class="clw-cell level-3"></span>
+          <span>more</span>
+        </div>
+        <ul class="clw-entries" id="clw-recent"></ul>
       </div>
     </div>
   </section>
@@ -313,5 +335,61 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+  (async function () {
+    let entries = [];
+    try {
+      const res = await fetch('/data/cloud-log.json');
+      if (res.ok) entries = await res.json();
+    } catch (e) {
+      entries = [];
+    }
+
+    const map = {};
+    entries.forEach(e => { map[e.date] = e; });
+
+    const weeks = 26;
+    const days = weeks * 7;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endDow = today.getDay();
+    const end = new Date(today);
+    end.setDate(today.getDate() + (6 - endDow));
+    const start = new Date(end);
+    start.setDate(end.getDate() - (days - 1));
+
+    const grid = document.getElementById('clw-grid');
+    grid.innerHTML = '';
+
+    function levelFor(n) {
+      if (n === 1) return 1;
+      if (n === 2) return 2;
+      return 3;
+    }
+
+    for (let i = 0; i < days; i++) {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      const key = d.toISOString().slice(0, 10);
+      const count = map[key] ? map[key].count : 0;
+      const div = document.createElement('div');
+      div.className = 'clw-cell' + (count > 0 ? ' level-' + levelFor(count) : '');
+      div.title = key + (map[key] && map[key].note ? ' — ' + map[key].note : '');
+      grid.appendChild(div);
+    }
+
+    const list = document.getElementById('clw-recent');
+    list.innerHTML = '';
+    if (entries.length === 0) {
+      list.innerHTML = '<li class="clw-empty">No entries yet.</li>';
+      return;
+    }
+    entries.slice().reverse().slice(0, 10).forEach(e => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="clw-date">${e.date}</span>${e.note}`;
+      list.appendChild(li);
+    });
+  })();
+  </script>
 </body>
 </html>
