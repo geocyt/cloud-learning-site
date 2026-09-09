@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URLSync — a self-hosted bookmark sync built to learn Terraform, Docker, and Postgres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blueprint: #131B29;
+    --blueprint-line: #2A3A50;
+    --paper: #EFEDE3;
+    --ink: #1E2430;
+    --ink-soft: #5B6270;
+    --rule: #D9D5C6;
+    --cyan: #8FD3E8;
+    --annotation: #B4552A;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  a { color: var(--annotation); text-decoration: none; border-bottom: 1px solid currentColor; }
+  a:hover { opacity: 0.75; }
+
+  /* ---- Hero ---- */
+  .hero {
+    background: var(--blueprint);
+    color: var(--paper);
+    padding: 72px 24px 64px;
+  }
+  .hero-inner { max-width: 640px; margin: 0 auto; }
+  .prompt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--cyan);
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(32px, 6vw, 48px);
+    font-weight: 700;
+    margin: 0 0 20px;
+    line-height: 1.15;
+    color: var(--cyan);
+  }
+  .hero p.lede {
+    font-size: 19px;
+    color: #C9CDD6;
+    max-width: 520px;
+    margin: 0 0 32px;
+  }
+  .hero-links { display: flex; gap: 24px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+  .hero-links a { color: var(--cyan); border-color: rgba(143,211,232,0.5); }
+
+  /* ---- Body layout: reading column + margin rail ---- */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+  section { padding-top: 64px; }
+  section + section { border-top: 1px solid var(--rule); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 640px) 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+
+  .col p { margin: 0 0 18px; max-width: 620px; }
+  .col p:last-child { margin-bottom: 0; }
+
+  .note {
+    font-size: 14px;
+    color: var(--annotation);
+    border-left: 2px solid var(--annotation);
+    padding-left: 14px;
+    line-height: 1.5;
+    padding-top: 2px;
+  }
+  .note .mono { display: block; font-size: 11px; color: var(--ink-soft); margin-bottom: 6px; }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .note { margin-top: 4px; margin-bottom: 8px; }
+  }
+
+  /* ---- Decisions list ---- */
+  .decisions { list-style: none; margin: 0; padding: 0; }
+  .decisions li {
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+  }
+  .decisions li:first-child { border-top: none; }
+  .decisions dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .decisions dd { margin: 0; color: var(--ink-soft); font-size: 15.5px; }
+  @media (max-width: 560px) {
+    .decisions li { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  /* ---- Diagram ---- */
+  .diagram { width: 100%; height: auto; margin: 8px 0 4px; }
+
+  /* ---- Footer ---- */
+  footer {
+    background: var(--blueprint);
+    color: #9AA1AE;
+    padding: 48px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+  footer .inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer a { color: var(--cyan); border-color: rgba(143,211,232,0.4); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="prompt">$ cat urlsync/status</div>
+    <h1>URLSync</h1>
+    <p class="lede">
+      A self-hosted alternative to Brave Sync — one small VPS, Postgres,
+      and Tailscale, built to practice the parts of cloud infrastructure
+      that don't show up in a tutorial: adopting a server that already
+      exists, and debugging tools that quietly stop working.
+    </p>
+    <div class="hero-links">
+      <a href="https://github.com/geocyt/URLSync-api">URLSync-api →</a>
+      <a href="https://github.com/geocyt/URLSync-infrastructure">URLSync-infrastructure →</a>
+      <a href="/">iluvi.xyz</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <section>
+    <div class="grid">
+      <div class="col">
+        <h2>The problem</h2>
+        <p>
+          I use Brave across a laptop, an Android tablet, and an iPhone,
+          and wanted saved URLs to follow me across all three. Brave
+          already solves this — Brave Sync is built in, end-to-end
+          encrypted, no account required.
+        </p>
+        <p>
+          I built this anyway. Not because Brave Sync is lacking, but
+          because a small, real, single-user service is a better way to
+          practice Terraform, Docker, and Postgres than another
+          tutorial project with no actual constraints.
+        </p>
+      </div>
+      <div class="note">
+        <span class="mono">note</span>
+        The best learning projects solve a problem you already have —
+        even when a better tool already exists.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid">
+      <div class="col">
+        <h2>Architecture</h2>
+        <p>
+          One VPS, already running a static site on nginx, adopted into
+          the project rather than replaced. Two containers — FastAPI and
+          Postgres — talk over Docker's internal network only. Every
+          device reaches the app through Tailscale, so there's no public
+          port to secure, patch, or worry about.
+        </p>
+      </div>
+      <div class="note">
+        <span class="mono">note</span>
+        No reverse proxy, no TLS certificates, no open firewall rule for
+        the app itself — Tailscale replaces all three.
+      </div>
+    </div>
+    <svg class="diagram" viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Devices connect over Tailscale to a VPS running Docker containers for the FastAPI app and Postgres, which backs up nightly to object storage.">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#5B6270" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <text x="20" y="40" font-family="JetBrains Mono, monospace" font-size="13" fill="#5B6270">devices</text>
+      <rect x="20" y="55" width="130" height="46" rx="4" fill="none" stroke="#5B6270" stroke-width="1"/>
+      <text x="85" y="83" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#1E2430">iPhone · Android · laptop</text>
+
+      <line x1="150" y1="78" x2="210" y2="78" stroke="#5B6270" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="180" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#5B6270">tailscale</text>
+
+      <rect x="210" y="30" width="380" height="140" rx="6" fill="none" stroke="#B4552A" stroke-width="1"/>
+      <text x="222" y="52" font-family="JetBrains Mono, monospace" font-size="12" fill="#B4552A">VPS — linode, $5/mo</text>
+
+      <rect x="234" y="70" width="150" height="60" rx="4" fill="none" stroke="#1E2430" stroke-width="1"/>
+      <text x="309" y="96" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#1E2430">FastAPI</text>
+      <text x="309" y="112" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#5B6270">container</text>
+
+      <line x1="384" y1="100" x2="426" y2="100" stroke="#5B6270" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <rect x="426" y="70" width="140" height="60" rx="4" fill="none" stroke="#1E2430" stroke-width="1"/>
+      <text x="496" y="96" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#1E2430">Postgres</text>
+      <text x="496" y="112" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#5B6270">not exposed</text>
+
+      <line x1="496" y1="170" x2="496" y2="200" stroke="#5B6270" stroke-width="1" marker-end="url(#arrow)"/>
+      <text x="510" y="190" font-family="JetBrains Mono, monospace" font-size="10" fill="#5B6270">nightly pg_dump</text>
+
+      <rect x="416" y="200" width="160" height="46" rx="4" fill="none" stroke="#5B6270" stroke-width="1"/>
+      <text x="496" y="228" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#1E2430">object storage</text>
+    </svg>
+  </section>
+
+  <section>
+    <h2>Decisions worth explaining</h2>
+    <dl class="decisions">
+      <li>
+        <dt>Postgres, not SQLite</dt>
+        <dd>SQLite would have been simpler for one user and a handful of URLs. Chose Postgres deliberately — schema, connection strings, backups, and migrations are skills that show up at work; a single file doesn't.</dd>
+      </li>
+      <li>
+        <dt>Adopted the existing VPS</dt>
+        <dd>The box already ran a static site on nginx. Rather than spin up a second server, I brought the existing one under Terraform with <span class="mono">terraform import</span> — a far more common real-world task than provisioning from a blank slate.</dd>
+      </li>
+      <li>
+        <dt>Two repos, one boundary</dt>
+        <dd>Infrastructure and application code live in separate repositories, so a Terraform apply is never the same action as shipping a code change.</dd>
+      </li>
+      <li>
+        <dt>Tailscale over a public port</dt>
+        <dd>Single user, no need for the internet to reach this at all. Removes an entire category of firewall and certificate management for free.</dd>
+      </li>
+    </dl>
+  </section>
+
+  <section>
+    <div class="grid">
+      <div class="col">
+        <h2>What actually broke</h2>
+        <p>
+          The first local build failed with a plain connection-refused
+          error — Postgres hadn't finished starting before FastAPI tried
+          to talk to it, since Compose's <span class="mono">depends_on</span>
+          only waits for a container to start, not for the service inside
+          it to be ready. Fixed with a <span class="mono">pg_isready</span>
+          healthcheck and a proper <span class="mono">condition:
+          service_healthy</span> dependency.
+        </p>
+        <p>
+          The second failure was stranger: a <span class="mono">KeyError</span>
+          buried inside Docker Compose's own event-watching code. Turned
+          out to be a known, unfixed bug in the old standalone
+          <span class="mono">docker-compose</span> (V1) binary talking to
+          a modern Docker Engine — V1 is deprecated and was never updated
+          for the newer event format. Swapped to the maintained Compose V2
+          plugin and the whole stack came up clean.
+        </p>
+      </div>
+      <div class="note">
+        <span class="mono">note</span>
+        Neither of these was in a tutorial anywhere. Diagnosing them was
+        most of the actual learning.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inner">
+    <span>URLSync — in progress, one Linode box, no ads, no accounts.</span>
+    <span><a href="/">back to iluvi.xyz</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
