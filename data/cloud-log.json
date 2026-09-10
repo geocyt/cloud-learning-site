@@ -8,5 +8,10 @@
     "date": "2026-09-09",
     "count": 4,
     "note": "URLSync project page · CloudFront routing fix · cloud-log tracker · Work on URLSync terraform import"
+  },
+  {
+    "date": "2026-09-10",
+    "count": 1,
+    "note": "Added ssh access to linode access"
   }
 ]
