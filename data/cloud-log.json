@@ -16,7 +16,7 @@
   },
   {
     "date": "2026-09-12",
-    "count": 3,
-    "note": "URLSync: applied Terraform network+compute modules to real VPS · debugged SSH auth chain: WSL key permissions, unregistered key, missing sudo · fixed Docker install on VPS - Ubuntu repo missing compose plugin, added official repo"
+    "count": 4,
+    "note": "URLSync: applied Terraform network+compute modules to real VPS · debugged SSH auth chain: WSL key permissions, unregistered key, missing sudo · fixed Docker install on VPS - Ubuntu repo missing compose plugin, added official repo · Tailscale joined: VPS + laptop confirmed on tailnet"
   }
 ]
